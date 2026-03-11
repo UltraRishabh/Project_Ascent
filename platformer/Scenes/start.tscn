@@ -1,0 +1,145 @@
+[gd_scene load_steps=9 format=3 uid="uid://buwwwuwp8k25v"]
+
+[ext_resource type="PackedScene" uid="uid://cgh63qfvlguyi" path="res://Scenes/player.tscn" id="1_rk01k"]
+[ext_resource type="PackedScene" uid="uid://crx86fk7ssdy3" path="res://Start.glb" id="2_o3wvq"]
+[ext_resource type="PackedScene" uid="uid://cqp2atn6no53r" path="res://Scenes/flipping_platform_2.tscn" id="4_iceld"]
+[ext_resource type="PackedScene" uid="uid://dcme37rhvkgaf" path="res://Scenes/flipping_platform_1.tscn" id="5_7pwkw"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7q7q3"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_bi5fs"]
+sky_material = SubResource("ProceduralSkyMaterial_7q7q3")
+
+[sub_resource type="Environment" id="Environment_okq71"]
+background_mode = 2
+sky = SubResource("Sky_bi5fs")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7q7q3"]
+albedo_color = Color(0.418191, 0.630374, 0.73698, 1)
+
+[node name="Start" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_okq71")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.9348254, 0.10382322, -0.33959037, 0, 0.95630467, 0.29237154, 0.35510692, 0.27331653, -0.8939778, 0, 0, 0)
+light_color = Color(0.834899, 0.940505, 0.999442, 1)
+light_energy = 0.7
+shadow_enabled = true
+
+[node name="Start2" parent="." instance=ExtResource("2_o3wvq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18, 1, 10)
+
+[node name="Water" type="CSGCombiner3D" parent="."]
+
+[node name="WaterPlaceholder2" type="CSGBox3D" parent="Water"]
+transform = Transform3D(0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0, 1, 58.1763, 6.68827, 20)
+material_override = SubResource("StandardMaterial3D_7q7q3")
+size = Vector3(27, 1, 15)
+
+[node name="WaterPlaceholder3" type="CSGBox3D" parent="Water"]
+transform = Transform3D(0.969808, 0, 0.243869, 0, 1, 0, -0.243869, 0, 0.969808, 91.6551, 13, 14.5421)
+material_override = SubResource("StandardMaterial3D_7q7q3")
+size = Vector3(48.0317, 1, 11)
+
+[node name="WaterPlaceholder4" type="CSGBox3D" parent="Water"]
+transform = Transform3D(0.96225, -0.257834, 0.0871557, 0.258819, 0.965926, 0, -0.084186, 0.0225576, 0.996195, 147.866, 22.7359, 6.04859)
+material_override = SubResource("StandardMaterial3D_7q7q3")
+size = Vector3(78, 1.21436, 14)
+
+[node name="WaterPlaceholder5" type="CSGBox3D" parent="Water"]
+transform = Transform3D(0.99593, -0.00298021, -0.0900804, 0.000951335, 0.999745, -0.0225576, 0.0901247, 0.0223801, 0.995679, 221.866, 32.7359, 6.04859)
+material_override = SubResource("StandardMaterial3D_7q7q3")
+size = Vector3(78, 1.21436, 14)
+
+[node name="WaterPlaceholder" type="CSGBox3D" parent="Water"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.014, 0.192822, 20.6481)
+size = Vector3(63.7576, 1.21436, 16.908)
+
+[node name="Start" type="CSGCombiner3D" parent="."]
+visible = false
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Start"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.719, 0, 0)
+size = Vector3(56, 1, 15)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Start"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.5, -1, 16.5)
+size = Vector3(56, 1, 18)
+
+[node name="Ledge" type="CSGPolygon3D" parent="Start"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 47, -0.4898, 8.5)
+polygon = PackedVector2Array(-2, 0, -0.633857, 0.451798, 0.999161, 0.985413, 0.996458, -0.0118063)
+depth = 55.0
+
+[node name="Platforming1" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Platforming1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63, 3, 6)
+size = Vector3(6, 1, 7)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Platforming1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 56, 1, -5)
+size = Vector3(6, 1, 7)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Platforming1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72, 6, 8)
+size = Vector3(6, 1, 7)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Platforming1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 83, 8, -2)
+size = Vector3(6, 1, 7)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Platforming1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 96.5, 12, 18.5)
+size = Vector3(21, 1, 48)
+
+[node name="FlippingPlatforms" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="FlippingPlatform2" parent="FlippingPlatforms" instance=ExtResource("4_iceld")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 170, 20, 43)
+
+[node name="FlippingPlatform3" parent="FlippingPlatforms" instance=ExtResource("4_iceld")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 184, 27, 47)
+
+[node name="FlippingPlatform" parent="FlippingPlatforms" instance=ExtResource("5_7pwkw")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 119, 13, 25)
+
+[node name="Platforming2" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Platforming2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 141.75, 15, 23.5)
+size = Vector3(12.5, 1, 16)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Platforming2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 147, 20, 42)
+size = Vector3(30, 1, 29)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Platforming2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 201.75, 36, 56.75)
+size = Vector3(17.5, 1, 29.5)
+
+[node name="FlippingPlatforms2" type="Node3D" parent="."]
+
+[node name="FlippingPlatform3" parent="FlippingPlatforms2" instance=ExtResource("4_iceld")]
+transform = Transform3D(0, 0, -1.5, 0, 1.5, 0, 1.5, 0, 0, 203, 36, 81)
+
+[node name="FlippingPlatform4" parent="FlippingPlatforms2" instance=ExtResource("4_iceld")]
+transform = Transform3D(0, 0, -1.5, 0, 1.5, 0, 1.5, 0, 0, 203.5, 37.5, 101)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="FlippingPlatforms2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 203, 46.5, 119)
+use_collision = true
+size = Vector3(20, 1, 14)
+
+[node name="Player" parent="." instance=ExtResource("1_rk01k")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.5, 2, -1)

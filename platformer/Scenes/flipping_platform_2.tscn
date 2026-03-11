@@ -1,0 +1,75 @@
+[gd_scene load_steps=9 format=3 uid="uid://cqp2atn6no53r"]
+
+[ext_resource type="Script" uid="uid://dfnup04vsj2b4" path="res://Scripts/flipping_platform_2.gd" id="1_v3chw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v3chw"]
+size = Vector3(2.5, 1, 4.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_v3chw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_24t7g"]
+albedo_color = Color(1, 0, 0.611765, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_24t7g"]
+size = Vector3(2.2, 0.01, 4.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4xwdl"]
+size = Vector3(0.01, 0.9, 4.4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4xwdl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y0xie"]
+albedo_color = Color(0, 1, 0.92549, 1)
+
+[node name="FlippingPlatform" type="AnimatableBody3D"]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+script = ExtResource("1_v3chw")
+
+[node name="RedCollider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.25, 0, 0)
+shape = SubResource("BoxShape3D_v3chw")
+
+[node name="RedMesh" type="MeshInstance3D" parent="RedCollider"]
+transform = Transform3D(2.5, 0, 0, 0, 1, 0, 0, 0, 4.5, 0, 0, 0)
+mesh = SubResource("BoxMesh_v3chw")
+surface_material_override/0 = SubResource("StandardMaterial3D_24t7g")
+
+[node name="RedUpperArea" type="Area3D" parent="RedCollider"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RedCollider/RedUpperArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.38419e-07, 0.505, -4.76837e-07)
+shape = SubResource("BoxShape3D_24t7g")
+
+[node name="RedSideArea" type="Area3D" parent="RedCollider"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RedCollider/RedSideArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.255, -0.025, 0)
+shape = SubResource("BoxShape3D_4xwdl")
+
+[node name="BlueCollider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25, 0, 0)
+shape = SubResource("BoxShape3D_v3chw")
+
+[node name="BlueMesh" type="MeshInstance3D" parent="BlueCollider"]
+transform = Transform3D(2.5, 0, 0, 0, 1, 0, 0, 0, 4.5, 0, 0, 0)
+mesh = SubResource("BoxMesh_4xwdl")
+surface_material_override/0 = SubResource("StandardMaterial3D_y0xie")
+
+[node name="BlueUpperArea" type="Area3D" parent="BlueCollider"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BlueCollider/BlueUpperArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.505, 0)
+shape = SubResource("BoxShape3D_24t7g")
+
+[node name="BlueSideArea" type="Area3D" parent="BlueCollider"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BlueCollider/BlueSideArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.255, -0.025, -2.38419e-07)
+shape = SubResource("BoxShape3D_4xwdl")
+
+[node name="FlipTimer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="RedCollider/RedUpperArea" to="." method="_on_red_upper_area_body_entered"]
+[connection signal="body_entered" from="RedCollider/RedSideArea" to="." method="_on_red_side_area_body_entered"]
+[connection signal="body_entered" from="BlueCollider/BlueUpperArea" to="." method="_on_blue_upper_area_body_entered"]
+[connection signal="body_entered" from="BlueCollider/BlueSideArea" to="." method="_on_blue_side_area_body_entered"]

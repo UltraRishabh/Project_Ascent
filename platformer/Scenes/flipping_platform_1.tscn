@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://dcme37rhvkgaf"]
+
+[ext_resource type="Script" uid="uid://dxqmwf8jlwasi" path="res://Scripts/flipping_platform_1.gd" id="1_0oj0a"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4xwdl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0oj0a"]
+albedo_color = Color(1, 0.588235, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v3chw"]
+size = Vector3(2.5, 1, 4.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_24t7g"]
+size = Vector3(2.2, 0.01, 4.3)
+
+[node name="FlippingPlatform" type="AnimatableBody3D"]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+script = ExtResource("1_0oj0a")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 4.5, 0, 0, 0)
+mesh = SubResource("BoxMesh_4xwdl")
+skeleton = NodePath("../BlueCollider")
+surface_material_override/0 = SubResource("StandardMaterial3D_0oj0a")
+
+[node name="RedCollider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.25, 0, 0)
+shape = SubResource("BoxShape3D_v3chw")
+
+[node name="RedUpperArea" type="Area3D" parent="RedCollider"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RedCollider/RedUpperArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.38419e-07, 0.505, -4.76837e-07)
+shape = SubResource("BoxShape3D_24t7g")
+
+[node name="BlueCollider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25, 0, 0)
+shape = SubResource("BoxShape3D_v3chw")
+
+[node name="BlueUpperArea" type="Area3D" parent="BlueCollider"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BlueCollider/BlueUpperArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.505, 0)
+shape = SubResource("BoxShape3D_24t7g")
+
+[node name="FlipTimer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="RedCollider/RedUpperArea" to="." method="_on_red_upper_area_body_entered"]
+[connection signal="body_entered" from="BlueCollider/BlueUpperArea" to="." method="_on_blue_upper_area_body_entered"]

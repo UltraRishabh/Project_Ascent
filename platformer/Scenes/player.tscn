@@ -1,0 +1,66 @@
+[gd_scene load_steps=10 format=3 uid="uid://cgh63qfvlguyi"]
+
+[ext_resource type="Script" uid="uid://blv2ap8h1v30b" path="res://Scripts/player_movement.gd" id="1_6t5aa"]
+[ext_resource type="Script" uid="uid://c0i1eavky2p6u" path="res://Scripts/pivot.gd" id="2_cvnsp"]
+[ext_resource type="PackedScene" uid="uid://coli5012yuyfb" path="res://Scenes/label.tscn" id="3_6t5aa"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u4ce8"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_qyfof"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6t5aa"]
+albedo_color = Color(0.6080975, 0.7476689, 0.73364484, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_cvnsp"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_6t5aa"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_vgqql"]
+
+[node name="Player" type="CharacterBody3D" groups=["player"]]
+wall_min_slide_angle = 0.698132
+script = ExtResource("1_6t5aa")
+
+[node name="Shape" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_u4ce8")
+
+[node name="Mesh" type="MeshInstance3D" parent="Shape"]
+mesh = SubResource("CapsuleMesh_qyfof")
+surface_material_override/0 = SubResource("StandardMaterial3D_6t5aa")
+
+[node name="UpperRayCast" type="RayCast3D" parent="Shape"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0.7)
+target_position = Vector3(0, -0.6, 0)
+debug_shape_custom_color = Color(0.705045, 0.000862118, 0.787046, 1)
+
+[node name="LowerRayCast" type="RayCast3D" parent="Shape"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2, 0)
+target_position = Vector3(0, 0, 0.7)
+debug_shape_custom_color = Color(0.646321, 0.00277714, 0.900487, 1)
+
+[node name="Pivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.981627, 0.190809, 0, -0.190809, 0.981627, 0, 0, 0)
+script = ExtResource("2_cvnsp")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="Pivot"]
+transform = Transform3D(1, 0, 0, 0, 0.984808, -0.173648, 0, 0.173648, 0.984808, 0, 3, 0)
+shape = SubResource("SphereShape3D_cvnsp")
+spring_length = 9.5
+margin = 0.2
+
+[node name="Camera3D" type="Camera3D" parent="Pivot/SpringArm3D"]
+
+[node name="Label" parent="." instance=ExtResource("3_6t5aa")]
+
+[node name="Shape2" type="CollisionShape3D" parent="."]
+visible = false
+shape = SubResource("SphereShape3D_6t5aa")
+
+[node name="Mesh2" type="MeshInstance3D" parent="Shape2"]
+mesh = SubResource("SphereMesh_vgqql")
+
+[node name="DownRayCast" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.01768, 0)
+target_position = Vector3(0, -0.3, 0)
+
+[node name="Timer" type="Timer" parent="."]

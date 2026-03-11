@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://bl7byhxj34y8k"]
+
+[ext_resource type="Script" uid="uid://doat4slh5gxtl" path="res://Scripts/play_button.gd" id="1_28flt"]
+
+[sub_resource type="GDScript" id="GDScript_28flt"]
+
+[node name="Main_Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Play_Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 450.0
+offset_top = 241.0
+offset_right = 685.0
+offset_bottom = 315.0
+text = "PLAY"
+script = ExtResource("1_28flt")
+metadata/_edit_use_anchors_ = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 293.0
+offset_top = 355.0
+offset_right = 847.0
+offset_bottom = 646.0
+bbcode_enabled = true
+text = "[center][b]HELLO WELCOME TO THIS FIRST PROTOTYPE[/b][/center]
+
+I HOPE YOU CAN PROVIDE SOME FEEDBACK ON PLAYER MOVEMENT
+
+[b]CONTROLS:[/b]
+  -  [b]WASD[/b] to move
+  -  [b]Mouse[/b] to look around
+  -  [b]SPACEBAR[/b] to jump and double jump
+  -  [b]Right Mouse Click[/b] to dash
+  -  You can [color=yellow]clamber on ledges[/color] and [color=yellow]climb walls[/color]"
+script = SubResource("GDScript_28flt")
+
+[connection signal="pressed" from="Play_Button" to="Play_Button" method="_on_pressed"]
